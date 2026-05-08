@@ -12,17 +12,13 @@ First check AKS control-plane state:
 az aks show -g @@RG@@ -n @@AKS@@ --query "{provisioningState:provisioningState,powerState:powerState.code}" -o json
 ```
 
-If `powerState` is `Stopped`, report the cluster as intentionally or administratively stopped, do not attempt `kubectl` or `az aks command invoke`, and note that the `aks-cluster-stopped` incident route is pre-approved to start the same managed cluster autonomously with `az aks start -g @@RG@@ -n @@AKS@@`. This exception does not authorize scale-out, upgrades, networking changes, or cluster recreation.
+If `powerState` is `Stopped`, report the cluster as intentionally or administratively stopped, do not attempt `kubectl` or `kubectl_command_executor_agent`, and note that the `aks-cluster-stopped` incident route is pre-approved to start the same managed cluster autonomously with `az aks start -g @@RG@@ -n @@AKS@@`. This exception does not authorize scale-out, upgrades, networking changes, or cluster recreation.
 
 Check drasi-system pod health, recent events, restart spikes, source/reaction lag symptoms, and AKS platform health.
 
-Use Kubernetes commands through AKS Run Command:
+Use `kubectl_command_executor_agent` for all Kubernetes commands — pass only the raw kubectl command (e.g., `kubectl get pods -n drasi-system -o wide`). Do not use `RunAzCliReadCommands` for `az aks command invoke`.
 
-```bash
-az aks command invoke -g @@RG@@ -n @@AKS@@ --command "<kubectl command>"
-```
-
-Do not ask for local `kubectl` output unless AKS Run Command is unavailable. Include `-o wide`, `-o json`, or another explicit `-o` output option on every `kubectl get` command.
+Do not ask for local `kubectl` output unless `kubectl_command_executor_agent` is unavailable. Include `-o wide`, `-o json`, or another explicit `-o` output option on every `kubectl get` command.
 
 Always return a short final status. If unhealthy, use Markdown tables:
 

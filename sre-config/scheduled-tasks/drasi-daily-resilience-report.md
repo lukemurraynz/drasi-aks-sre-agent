@@ -12,15 +12,11 @@ Begin with AKS control-plane state:
 az aks show -g @@RG@@ -n @@AKS@@ --query "{provisioningState:provisioningState,powerState:powerState.code}" -o json
 ```
 
-If `powerState` is `Stopped`, call that out as the primary availability condition and avoid Kubernetes run-command checks that require a running cluster.
+If `powerState` is `Stopped`, call that out as the primary availability condition and avoid Kubernetes commands that require a running cluster.
 
-When the cluster is running, use Kubernetes commands through AKS Run Command:
+When the cluster is running, use `kubectl_command_executor_agent` for all Kubernetes commands — pass only the raw kubectl command (e.g., `kubectl get pods -n drasi-system -o wide`). Do not use `RunAzCliReadCommands` for `az aks command invoke`.
 
-```bash
-az aks command invoke -g @@RG@@ -n @@AKS@@ --command "<kubectl command>"
-```
-
-Do not ask for local `kubectl` output unless AKS Run Command is unavailable.
+Do not ask for local `kubectl` output unless `kubectl_command_executor_agent` is unavailable.
 
 Include recurring errors, restart trends, source/reaction lag signals, AKS platform risks, open follow-ups, and recommended hardening.
 

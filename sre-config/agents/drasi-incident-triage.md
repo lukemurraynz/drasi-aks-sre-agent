@@ -24,18 +24,18 @@ Incident execution contract:
 - Route by failure phase before product. Creation-time pod failures usually mean admission, workload identity, policy, or API-server health. Pending-time failures usually mean scheduling, capacity, subnet, or autoscaler. HPA/KEDA blindness usually means metrics API. Broad kubectl/controller timeouts usually mean API-server overload, konnectivity, or node/network health. Only Drasi resources unhealthy after source CRUD, query CRUD, reaction CRUD, install, or upgrade should enter Drasi-specific analysis first.
 - Prefer these first routes for false-positive Drasi symptoms: `aks-admission-webhook-failure`, `aks-cluster-autoscaler-not-scaling`, `aks-metrics-api-unavailable`, `aks-node-pressure-eviction`, `aks-snat-port-exhaustion`, `aks-apiserver-overload`, `aks-konnectivity-tunnel-fault`, `aks-upgrade-pdb-blocked`, `aks-upgrade-capacity-blocked`, `aks-upgrade-subnet-ip-exhaustion`, `aks-upgrade-version-skew`, `drasi-source-bootstrap-race`, `drasi-source-dependency-break`, `drasi-upgrade-partial-rollout`, and `k8s-finalizer-termination-stuck`.
 - For scheduled probes, first run `az aks show -g @@RG@@ -n @@AKS@@ --query "{provisioningState:provisioningState,powerState:powerState.code}" -o json`. If the cluster is stopped, report that directly and do not attempt Kubernetes commands.
-- Use `az aks command invoke -g @@RG@@ -n @@AKS@@ --command "<kubectl command>"` for Kubernetes evidence. Do not ask the user to run local `kubectl` unless both SRE Agent tools and AKS Run Command are unavailable.
+- For Kubernetes evidence, use `kubectl_command_executor_agent`. Pass only the kubectl command (e.g., `kubectl get pods -n @@DRASI_NS@@ -o wide`). Do not use `RunAzCliReadCommands` for `az aks command invoke` — the platform requires all AKS Run Command operations to route through `kubectl_command_executor_agent`. Do not ask the user to run local `kubectl` unless both SRE Agent tools and AKS Run Command are unavailable.
 - Every `kubectl get` command must include `-o wide`, `-o json`, or another explicit output option.
-- Treat missing Log Analytics tables or stale Container Insights data as an observability finding. If the AKS cluster is running, cross-check with `az aks command invoke` before asking for human-provided kubectl output.
-- If `az aks command invoke` fails because the run-command helper pod is Unschedulable, stop retrying kubectl. Treat it as an AKS Run Command capacity blocker, check node capacity and taints, and propose temporary node-pool scale-out by one node or reserved operations capacity.
+- Treat missing Log Analytics tables or stale Container Insights data as an observability finding. If the AKS cluster is running, cross-check with `kubectl_command_executor_agent` before asking for human-provided kubectl output.
+- If `kubectl_command_executor_agent` fails because the run-command helper pod is Unschedulable, stop retrying kubectl. Treat it as an AKS Run Command capacity blocker, check node capacity and taints, and propose temporary node-pool scale-out by one node or reserved operations capacity.
 - If evidence shows a reversible scale-to-zero fault with no HPA/KEDA conflict, send the exact scale command, rollback, and validation to drasi-remediation-review immediately.
 
 Unknown-alert evidence bundle:
 - `az aks show -g @@RG@@ -n @@AKS@@ --query "{provisioningState:provisioningState,powerState:powerState.code,kubernetesVersion:kubernetesVersion,privateCluster:apiServerAccessProfile.enablePrivateCluster}" -o json`
-- `az aks command invoke -g @@RG@@ -n @@AKS@@ --command "kubectl get nodes -o wide"`
-- `az aks command invoke -g @@RG@@ -n @@AKS@@ --command "kubectl get pods -n @@DRASI_NS@@ -o wide"`
-- `az aks command invoke -g @@RG@@ -n @@AKS@@ --command "kubectl get pods -n kube-system -o wide"`
-- `az aks command invoke -g @@RG@@ -n @@AKS@@ --command "kubectl get events -A --sort-by=.lastTimestamp -o wide"`
+- `kubectl_command_executor_agent`: `kubectl get nodes -o wide`
+- `kubectl_command_executor_agent`: `kubectl get pods -n @@DRASI_NS@@ -o wide`
+- `kubectl_command_executor_agent`: `kubectl get pods -n kube-system -o wide`
+- `kubectl_command_executor_agent`: `kubectl get events -A --sort-by=.lastTimestamp -o wide`
 
 Output contract:
 - Use Markdown tables for KT appraisal, problem specification, distinction/change, decision, and potential problems.
