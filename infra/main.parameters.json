@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environmentName": {
+      "value": "${AZURE_ENV_NAME}"
+    },
+    "location": {
+      "value": "${AZURE_LOCATION}"
+    },
+    "drasiResourceGroupName": {
+      "value": "${DRASI_RESOURCE_GROUP_NAME}"
+    },
+    "logAnalyticsWorkspaceName": {
+      "value": "${DRASI_LOG_ANALYTICS_WORKSPACE_NAME}"
+    },
+    "drasiAksClusterName": {
+      "value": "${DRASI_AKS_CLUSTER_NAME}"
+    },
+    "agentResourceGroupName": {
+      "value": "${AZURE_RESOURCE_GROUP}"
+    },
+    "agentName": {
+      "value": "${AZURE_SRE_AGENT_NAME}"
+    },
+    "applicationInsightsName": {
+      "value": "${AZURE_SRE_AGENT_APPINSIGHTS_NAME}"
+    },
+    "userAssignedIdentityName": {
+      "value": "${AZURE_SRE_AGENT_IDENTITY_NAME}"
+    }
+  }
+}

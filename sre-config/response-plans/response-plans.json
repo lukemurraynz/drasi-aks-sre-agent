@@ -1,0 +1,324 @@
+[
+  {
+    "id": "drasi-aks-sev0-sev3-catchall",
+    "name": "Drasi AKS Sev0-Sev3 catch-all",
+    "targetResourceType": "microsoft.resources/subscriptions/resourcegroups",
+    "targetResource": "@@RG_ID@@",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3"],
+    "titleContains": "",
+    "titleContainsAny": ["drasi", "aks", "kubernetes", "kube", "container service", "@@AKS@@", "@@RG@@"],
+    "handlingAgent": "drasi-incident-triage",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 2
+  },
+  {
+    "id": "aks-cluster-stopped",
+    "name": "AKS cluster stopped",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["aks cluster stopped", "cluster stopped", "managedclusters/stop/action", "stop/action", "aks-cluster-stopped", "powerstate=stopped", "powerstate stopped", "control plane unreachable"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "autonomous",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-coredns-unavailable",
+    "name": "AKS CoreDNS unavailable",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["coredns", "kube-dns", "dns unavailable", "sre-e2e-aks-coredns-ready-drop"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-node-health",
+    "name": "AKS node health or pressure",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["node not ready", "nodenotready", "node pressure", "memorypressure", "diskpressure", "pidpressure", "sre-e2e-aks-node-not-ready"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-pod-scheduling",
+    "name": "AKS pod scheduling failure",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["pending", "unschedulable", "failedscheduling", "insufficient cpu", "insufficient memory", "sre-e2e-aks-pod-pending-unschedulable"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-image-pull-failure",
+    "name": "AKS image pull failure",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["imagepullbackoff", "errimagepull", "pull access denied", "acr", "registry", "sre-e2e-aks-image-pull-failure"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-storage-mount-failure",
+    "name": "AKS storage mount or attach failure",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["failedmount", "failedattachvolume", "attachvolume", "mountvolume", "persistentvolume", "persistentvolumeclaim", "sre-e2e-aks-storage-mount-failure"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-dapr-system-fault",
+    "name": "AKS Dapr system fault",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["dapr", "sidecar injector", "placement", "sentry", "dapr operator", "dapr scheduler", "sre-e2e-aks-dapr-system-fault"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-cilium-network-fault",
+    "name": "AKS Cilium or network fault",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["cilium", "network unavailable", "network policy", "networkplugin", "conntrack", "sre-e2e-aks-cilium-network-fault"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-monitoring-agent-fault",
+    "name": "AKS Azure Monitor agent fault",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["azure monitor agent", "ama-logs", "containerlogv2 missing", "kubepodinventory missing", "omsagent", "sre-e2e-aks-monitoring-agent-fault"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-admission-webhook-failure",
+    "name": "AKS admission webhook unavailable or timing out",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["admission webhook", "mutatingwebhookconfiguration", "validatingwebhookconfiguration", "failed calling webhook", "context deadline exceeded", "webhook timeout", "failurepolicy", "workload identity webhook", "sre-e2e-aks-admission-webhook-failure"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-cluster-autoscaler-not-scaling",
+    "name": "AKS cluster autoscaler disabled, capped, or stuck",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["cluster autoscaler", "autoscaler not scaling", "node group sizes", "failed to fix node group sizes", "max node count", "max-count too low", "scale up backoff", "sre-e2e-aks-cluster-autoscaler-not-scaling"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-metrics-api-unavailable",
+    "name": "AKS metrics API or external metrics API unavailable",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["metrics.k8s.io", "external.metrics.k8s.io", "apiservice false", "metrics-server", "keda-metrics-apiserver", "kubectl top failed", "hpa metrics unavailable", "sre-e2e-aks-metrics-api-unavailable"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-node-pressure-eviction",
+    "name": "AKS node-pressure eviction or pressure-driven NotReady",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["node pressure eviction", "evicted", "kubelet eviction", "diskpressure", "memorypressure", "pidpressure", "node pressure", "node not ready pressure", "sre-e2e-aks-node-pressure-eviction"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-snat-port-exhaustion",
+    "name": "AKS SNAT port exhaustion",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["snat port exhaustion", "snat ports", "failed snat", "outbound connection failures", "allocated outbound ports", "intermittent egress timeout", "load balancer snat", "sre-e2e-aks-snat-port-exhaustion"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-apiserver-overload",
+    "name": "AKS API server overload or throttling",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["apiserver overload", "api server overload", "apiserver throttling", "429 too many requests", "list watch timeout", "watch timeout", "api priority and fairness", "sre-e2e-aks-apiserver-overload"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-konnectivity-tunnel-fault",
+    "name": "AKS konnectivity tunnel fault",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["konnectivity", "konnectivity-agent", "tunnel connectivity", "apiserver network proxy", "exec logs port-forward failing", "run command tunnel", "private cluster tunnel", "sre-e2e-aks-konnectivity-tunnel-fault"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-upgrade-pdb-blocked",
+    "name": "AKS upgrade blocked by strict PDB or undrainable nodes",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["poddrainfailure", "pod drain failure", "pdb blocked upgrade", "poddisruptionbudget", "undrainable node", "maxunavailable 0", "upgrade drain failed", "sre-e2e-aks-upgrade-pdb-blocked"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-upgrade-capacity-blocked",
+    "name": "AKS upgrade blocked by quota, SKU, or allocation capacity",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["quotaexceeded", "insufficientvcpuquota", "allocationfailed", "overconstrainedallocationrequest", "skunotavailable", "maxsurge capacity", "surge node capacity", "sre-e2e-aks-upgrade-capacity-blocked"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-upgrade-subnet-ip-exhaustion",
+    "name": "AKS upgrade blocked by subnet IP exhaustion",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["subnetisfull", "subnet ip exhaustion", "not enough ip addresses", "surge node ip", "maxpods subnet", "subnet capacity", "sre-e2e-aks-upgrade-subnet-ip-exhaustion"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "aks-upgrade-version-skew",
+    "name": "AKS upgrade blocked by version skew or unsupported hop",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["unsupported kubernetes version", "version skew", "unsupported upgrade", "minor version skip", "node pool version too old", "upgrade path invalid", "sre-e2e-aks-upgrade-version-skew"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "drasi-control-plane-unavailable",
+    "name": "Drasi control plane unavailable",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["drasi-api", "drasi resource provider", "drasi-resource-provider", "default-query-host", "default-publish-api", "default-view-svc", "sre-e2e-drasi-control-plane-unavailable"],
+    "handlingAgent": "drasi-runtime-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "drasi-source-unavailable",
+    "name": "Drasi source unavailable or unhealthy",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["drasi source", "source router", "source-router", "change-router", "source dispatcher", "source proxy", "reactivator", "source unavailable", "scaled to zero", "sre-e2e-drasi-source-failure"],
+    "handlingAgent": "drasi-runtime-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "drasi-query-staleness",
+    "name": "Drasi query staleness or query host fault",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["query staleness", "stale query", "continuousquery", "query host", "query-api", "query lag", "sre-e2e-drasi-query-staleness"],
+    "handlingAgent": "drasi-runtime-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "drasi-reaction-unavailable",
+    "name": "Drasi reaction unavailable",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["reaction", "log-changes-reaction", "reaction unavailable", "reaction failed", "sre-e2e-drasi-reaction-unavailable"],
+    "handlingAgent": "drasi-runtime-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "drasi-state-store-fault",
+    "name": "Drasi state store fault",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["drasi redis", "drasi mongo", "mongodb", "redis", "state store", "dapr component", "sre-e2e-drasi-state-store-fault"],
+    "handlingAgent": "drasi-runtime-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "drasi-upgrade-partial-rollout",
+    "name": "Drasi partial upgrade or failed rollback",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["drasi upgrade", "drasi rollback", "partial rollout", "rollout failed", "drasi-system rollout", "helm upgrade drasi", "sre-e2e-drasi-upgrade-partial-rollout"],
+    "handlingAgent": "drasi-runtime-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "drasi-source-bootstrap-race",
+    "name": "Drasi source and Continuous Query bootstrap race",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["source bootstrap race", "continuous query bootstrap", "no bootstrap retry", "source not available before query", "continuousquery broken state", "sre-e2e-drasi-source-bootstrap-race"],
+    "handlingAgent": "drasi-runtime-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "drasi-source-dependency-break",
+    "name": "Drasi source deleted while dependent queries remain",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["source dependency break", "deleted source", "source deleted", "dependent continuousquery", "dependent continuous query", "dependency integrity", "sre-e2e-drasi-source-dependency-break"],
+    "handlingAgent": "drasi-runtime-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "k8s-finalizer-termination-stuck",
+    "name": "Kubernetes namespace or PVC stuck terminating",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["stuck terminating", "namespace terminating", "pvc terminating", "finalizer", "owner references", "webhook blocks deletion", "apiservice unavailable", "sre-e2e-k8s-finalizer-termination-stuck"],
+    "handlingAgent": "aks-platform-diagnostics",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "drasi-platform-fault",
+    "name": "Drasi platform fault",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["drasi", "crashloopbackoff", "pod", "node", "coredns", "dapr", "cilium", "kube"],
+    "handlingAgent": "drasi-incident-triage",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  },
+  {
+    "id": "drasi-processing-lag",
+    "name": "Drasi processing lag or query staleness",
+    "priorities": ["Sev0", "Sev1", "Sev2", "Sev3", "Sev4"],
+    "titleContains": "",
+    "titleContainsAny": ["drasi-processing-lag", "drasi lag", "stale", "backlog", "reaction", "source"],
+    "handlingAgent": "drasi-incident-triage",
+    "agentMode": "review",
+    "maxAutomatedInvestigationAttempts": 3
+  }
+]
