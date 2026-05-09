@@ -4,6 +4,8 @@ This repository can deploy an Azure SRE Agent for a Drasi-on-AKS implementation 
 
 It is intended to be a public, repeatable blueprint for teams that want to see how Azure SRE Agent can be deployed as code, connected to Azure Monitor, and extended with version-controlled agents, skills, response plans, scheduled tasks, and AKS/Drasi reliability tests.
 
+> Refer to my blog article: [Running Azure SRE Agent for AKS and Drasi Operations](https://luke.geek.nz/azure/azure-sre-agent-aks-drasi/).
+
 ## What This Repository Is
 
 This repo has two jobs:
